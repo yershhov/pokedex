@@ -1,12 +1,11 @@
 import {
-  VStack,
   Center,
   SimpleGrid,
-  Grid,
   Box,
   Text,
   Skeleton,
   Spinner,
+  Flex,
 } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import { getPokemon } from "../api/service";
@@ -57,14 +56,14 @@ export const PokemonCard = (props: PokemonCardProps) => {
       }}
     >
       <Card>
-        <VStack>
+        <Flex flexDirection={"column"}>
           <Center border={"1px"} w="100%" h="6.1rem">
             {loading && <Spinner />}
             {!loading && (
               <PokemonImage imageUrl={pokemonDetails.sprites.front_default} />
             )}
           </Center>
-          <Center fontWeight={"semibold"}>
+          <Center pt={2} fontSize={14} fontWeight="700">
             {props.pokemon.name.charAt(0).toUpperCase() +
               props.pokemon.name.slice(1)}
           </Center>
@@ -72,11 +71,11 @@ export const PokemonCard = (props: PokemonCardProps) => {
 
           {loading && <Skeleton h="1.58rem" />}
           {!loading && (
-            <SimpleGrid columns={2} w="100%" gap={2}>
+            <SimpleGrid columns={2} w="100%" gap={1} pb={4}>
               {pokemonDetails.types.map((item: any) => {
                 const type = item.type.name;
                 return (
-                  <Grid
+                  <Center
                     // @ts-ignore
                     bg={typeColors[type]}
                     bgGradient={`linear-gradient(gray.200, ${
@@ -87,7 +86,6 @@ export const PokemonCard = (props: PokemonCardProps) => {
                     border="2px"
                     // @ts-ignore
                     borderColor={typeColors[type]}
-                    placeItems="center"
                     fontWeight="700"
                     py={0.5}
                     key={uuid()}
@@ -95,12 +93,12 @@ export const PokemonCard = (props: PokemonCardProps) => {
                     <Text display={"inline"} fontSize={11}>
                       {capitalize(type) + " "}
                     </Text>
-                  </Grid>
+                  </Center>
                 );
               })}
             </SimpleGrid>
           )}
-        </VStack>
+        </Flex>
       </Card>
     </Box>
   );
