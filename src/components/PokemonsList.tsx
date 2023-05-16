@@ -1,5 +1,5 @@
 import { Button, Grid, GridItem, SimpleGrid, Skeleton } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
   fetchPokemons,
   pokemonsSetLastPerformedQuery,
@@ -16,7 +16,7 @@ export const PokemonsList = () => {
     useAppSelector((state) => state.pokemons.pokemons),
     useAppSelector((state) => state.pokemons.pokemonsState),
   ];
-
+  const loadButtonRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const query = `https://pokeapi.co/api/v2/pokemon/?limit=12`;
     dispatch(fetchPokemons(query));
@@ -41,10 +41,14 @@ export const PokemonsList = () => {
             ))}
           {pokemonsState === "fulfilled" &&
             (pokemons?.results as any[]).map((pokemon) => (
-              <PokemonCard key={uuid()} pokemon={pokemon} />
+              <PokemonCard
+                key={uuid()}
+                pokemon={pokemon}
+                loadButtonRef={loadButtonRef}
+              />
             ))}
 
-          <GridItem colSpan={{ base: 1, sm: 3 }}>
+          <GridItem colSpan={{ base: 1, sm: 3 }} ref={loadButtonRef}>
             <Button
               w="100%"
               colorScheme="blue"

@@ -7,7 +7,7 @@ import {
   Spinner,
   Flex,
 } from "@chakra-ui/react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, RefObject } from "react";
 import { getPokemon } from "../api/service";
 import { pokemonsSetPreviewingPokemon } from "../redux/pokemons.slice";
 import { store } from "../store";
@@ -16,18 +16,15 @@ import { PokemonImage } from "./PokemonImage";
 import { typeColors } from "../utils/typeColors";
 import Card from "./Card";
 import { v4 as uuid } from "uuid";
-import { useMediaQuery } from "usehooks-ts";
 
 type PokemonCardProps = {
   pokemon: any;
+  loadButtonRef: RefObject<HTMLDivElement>;
 };
 
 export const PokemonCard = (props: PokemonCardProps) => {
   const [pokemonDetails, setPokemonDetils] = useState<any>();
   const [loading, setLoading] = useState(true);
-
-  const isMobile = useMediaQuery("(max-width: 82em)");
-  const scrollMark = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchPokemonDetails() {
@@ -42,12 +39,9 @@ export const PokemonCard = (props: PokemonCardProps) => {
       cursor="pointer"
       onClick={() => {
         store.dispatch(pokemonsSetPreviewingPokemon(pokemonDetails));
-        if (isMobile) {
-          window.scrollTo({
-            top: 650,
-            behavior: "smooth",
-          });
-        }
+        props.loadButtonRef.current?.scrollIntoView({
+          behavior: "smooth",
+        });
       }}
     >
       <Card>
@@ -58,11 +52,11 @@ export const PokemonCard = (props: PokemonCardProps) => {
               <PokemonImage imageUrl={pokemonDetails.sprites.front_default} />
             )}
           </Center>
+
           <Center pt={2} fontSize={14} fontWeight="700">
             {props.pokemon.name.charAt(0).toUpperCase() +
               props.pokemon.name.slice(1)}
           </Center>
-          <div ref={scrollMark}></div>
 
           {loading && <Skeleton h="1.58rem" />}
           {!loading && (
