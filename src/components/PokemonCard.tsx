@@ -7,7 +7,7 @@ import {
   Spinner,
   Flex,
 } from "@chakra-ui/react";
-import { useState, useEffect, useRef, RefObject } from "react";
+import { useState, useEffect, RefObject } from "react";
 import { getPokemon } from "../api/service";
 import { pokemonsSetPreviewingPokemon } from "../redux/pokemons.slice";
 import { store } from "../store";
