@@ -16,7 +16,6 @@ export const PokemonsList = () => {
     useAppSelector((state) => state.pokemons.pokemons),
     useAppSelector((state) => state.pokemons.pokemonsState),
   ];
-  const loadButtonRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const query = `https://pokeapi.co/api/v2/pokemon/?limit=12`;
     dispatch(fetchPokemons(query));
@@ -41,14 +40,10 @@ export const PokemonsList = () => {
             ))}
           {pokemonsState === "fulfilled" &&
             (pokemons?.results as any[]).map((pokemon) => (
-              <PokemonCard
-                key={uuid()}
-                pokemon={pokemon}
-                loadButtonRef={loadButtonRef}
-              />
+              <PokemonCard key={uuid()} pokemon={pokemon} />
             ))}
 
-          <GridItem colSpan={{ base: 1, sm: 3 }} ref={loadButtonRef}>
+          <GridItem colSpan={{ base: 1, sm: 3 }}>
             <Button
               w="100%"
               colorScheme="blue"

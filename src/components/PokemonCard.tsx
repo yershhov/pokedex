@@ -19,7 +19,6 @@ import { v4 as uuid } from "uuid";
 
 type PokemonCardProps = {
   pokemon: any;
-  loadButtonRef: RefObject<HTMLDivElement>;
 };
 
 export const PokemonCard = (props: PokemonCardProps) => {
@@ -39,9 +38,6 @@ export const PokemonCard = (props: PokemonCardProps) => {
       cursor="pointer"
       onClick={() => {
         store.dispatch(pokemonsSetPreviewingPokemon(pokemonDetails));
-        props.loadButtonRef.current?.scrollIntoView({
-          behavior: "smooth",
-        });
       }}
     >
       <Card>
@@ -58,7 +54,11 @@ export const PokemonCard = (props: PokemonCardProps) => {
               props.pokemon.name.slice(1)}
           </Center>
 
-          {loading && <Skeleton h="1.58rem" />}
+          {loading && (
+            <Box pb={4}>
+              <Skeleton h="1.49rem" />
+            </Box>
+          )}
           {!loading && (
             <SimpleGrid columns={2} w="100%" gap={1} pb={4}>
               {pokemonDetails.types.map((item: any) => {

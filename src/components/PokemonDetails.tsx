@@ -4,11 +4,30 @@ import { capitalize, addZerosAtTheBeginning } from "../utils/utils";
 import { PokemonImage } from "./PokemonImage";
 import Card from "./Card";
 import { PokemonStats } from "./PokemonStats";
+import { useEffect, useRef } from "react";
+import { useMediaQuery } from "usehooks-ts";
 
 export const PokemonDetails = () => {
   const previewingPokemonDetails = useAppSelector(
     (state) => state.pokemons.previewingPokemonDetails
   );
+  const scrollMark = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery("(max-width: 82em)");
+
+  useEffect(() => {
+    if (
+      isMobile &&
+      scrollMark.current &&
+      scrollMark.current.getBoundingClientRect().top > window.innerHeight
+    ) {
+      const yOffset = -650;
+      const y =
+        scrollMark.current!.getBoundingClientRect().top +
+        window.pageYOffset +
+        yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  }, [previewingPokemonDetails, scrollMark.current]);
 
   return (
     <>
@@ -28,7 +47,7 @@ export const PokemonDetails = () => {
                       imageUrl={previewingPokemonDetails.sprites.front_default}
                     />
                   </Center>
-                  <Center pt={2}>
+                  <Center pt={2} ref={scrollMark}>
                     <Text fontWeight={"bold"} fontSize={20}>
                       {capitalize(previewingPokemonDetails.forms[0].name) +
                         " #" +
