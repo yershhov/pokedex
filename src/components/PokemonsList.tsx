@@ -1,5 +1,5 @@
 import { Button, Grid, GridItem, SimpleGrid, Skeleton } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import {
   fetchPokemons,
   pokemonsSetLastPerformedQuery,
