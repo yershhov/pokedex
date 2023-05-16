@@ -5,7 +5,6 @@ interface PokemonsState {
   pokemonsState: string;
   pokemons?: any;
   previewingPokemonDetails?: any;
-  previewingPokemonIndex?: number;
   lastFetchQuery?: string;
 }
 
@@ -28,9 +27,7 @@ export const pokemonsSlice = createSlice({
     pokemonsSetPreviewingPokemon: (state, action) => {
       state.previewingPokemonDetails = action.payload;
     },
-    pokemonsSetPreviewingPokemonIndex: (state, action) => {
-      state.previewingPokemonIndex = action.payload;
-    },
+
     pokemonsFilterByNames: (state, action) => {
       state.pokemons.results = state.pokemons.results.filter((item: any) =>
         action.payload.includes(item.name)
@@ -58,7 +55,6 @@ export const pokemonsSlice = createSlice({
 
 export const {
   pokemonsSetPreviewingPokemon,
-  pokemonsSetPreviewingPokemonIndex,
   pokemonsFilterByNames,
   pokemonsSetLastPerformedQuery,
 } = pokemonsSlice.actions;

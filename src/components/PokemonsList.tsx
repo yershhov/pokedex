@@ -40,12 +40,8 @@ export const PokemonsList = () => {
               <Skeleton key={uuid()} height={"11rem"} />
             ))}
           {pokemonsState === "fulfilled" &&
-            (pokemons?.results as any[]).map((pokemon, index) => (
-              <PokemonCard
-                key={uuid()}
-                pokemon={pokemon}
-                pokemonIndex={index + 1}
-              />
+            (pokemons?.results as any[]).map((pokemon) => (
+              <PokemonCard key={uuid()} pokemon={pokemon} />
             ))}
 
           <GridItem colSpan={{ base: 1, sm: 3 }}>

@@ -9,10 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import { getPokemon } from "../api/service";
-import {
-  pokemonsSetPreviewingPokemon,
-  pokemonsSetPreviewingPokemonIndex,
-} from "../redux/pokemons.slice";
+import { pokemonsSetPreviewingPokemon } from "../redux/pokemons.slice";
 import { store } from "../store";
 import { capitalize } from "../utils/utils";
 import { PokemonImage } from "./PokemonImage";
@@ -23,7 +20,6 @@ import { useMediaQuery } from "usehooks-ts";
 
 type PokemonCardProps = {
   pokemon: any;
-  pokemonIndex: number;
 };
 
 export const PokemonCard = (props: PokemonCardProps) => {
@@ -46,7 +42,6 @@ export const PokemonCard = (props: PokemonCardProps) => {
       cursor="pointer"
       onClick={() => {
         store.dispatch(pokemonsSetPreviewingPokemon(pokemonDetails));
-        store.dispatch(pokemonsSetPreviewingPokemonIndex(props.pokemonIndex));
         if (isMobile) {
           window.scrollTo({
             top: 650,

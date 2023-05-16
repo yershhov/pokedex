@@ -5,10 +5,9 @@ import { Center, Box, Text } from "@chakra-ui/react";
 import { capitalize, addZerosAtTheBeginning } from "../utils/utils";
 
 export const PokemonDetailsCard = () => {
-  const [previewingPokemonDetails, previewingPokemonIndex] = [
-    useAppSelector((state) => state.pokemons.previewingPokemonDetails),
-    useAppSelector((state) => state.pokemons.previewingPokemonIndex),
-  ];
+  const previewingPokemonDetails = useAppSelector(
+    (state) => state.pokemons.previewingPokemonDetails
+  );
   return (
     <Card>
       <Box>
@@ -19,7 +18,7 @@ export const PokemonDetailsCard = () => {
           <Text fontWeight={"bold"} fontSize={20}>
             {capitalize(previewingPokemonDetails.forms[0].name) +
               " #" +
-              addZerosAtTheBeginning(`${previewingPokemonIndex}`)}
+              addZerosAtTheBeginning(`${previewingPokemonDetails.id}`)}
           </Text>
         </Center>
       </Box>
